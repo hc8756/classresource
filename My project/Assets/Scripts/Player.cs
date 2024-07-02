@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     private bool grounded;
     public GameObject manager;
     private Vector2 spawnPoint;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask wallLayer;
+    private float horizontalAxis;
+    private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,13 +25,13 @@ public class Player : MonoBehaviour
         grounded = false;
         spawnPoint = new Vector2(0,-2);
         transform.position = spawnPoint;
-        Time.timeScale = 1;
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float horizontalAxis = Input.GetAxis("Horizontal");
+        horizontalAxis = Input.GetAxis("Horizontal");
 
         body.velocity = new Vector2(horizontalAxis*speed, body.velocity.y);
         if (horizontalAxis > 0.0)
@@ -69,4 +73,19 @@ public class Player : MonoBehaviour
             manager.GetComponent<Manager>().lives--;
         }
     }
-}
+
+    private bool isGrounded()
+    {
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down,0.1f,groundLayer);
+        return raycastHit2D;
+    }
+    private bool OnWall()
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x,0), 0.1f,wallLayer);
+        return raycastHit;
+    }
+    public bool canAttack()
+    {
+        return horizontalAxis == 0 && isGrounded() && !OnWall();
+    }
+}   
