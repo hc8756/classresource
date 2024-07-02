@@ -16,7 +16,6 @@ public class Manager : MonoBehaviour
     {
         lives = 3;
         gameOverScreen.SetActive(false);
-        Time.timeScale = 1;
     }
 
     // Update is called once per frame
