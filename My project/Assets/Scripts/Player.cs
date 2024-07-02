@@ -25,11 +25,7 @@ public class Player : MonoBehaviour
         grounded = false;
         spawnPoint = new Vector2(0,-2);
         transform.position = spawnPoint;
-<<<<<<< Updated upstream
-=======
-        Time.timeScale = 1;
         boxCollider = GetComponent<BoxCollider2D>();
->>>>>>> Stashed changes
     }
 
     // Update is called once per frame
