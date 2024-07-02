@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
         grounded = false;
         spawnPoint = new Vector2(0,-2);
         transform.position = spawnPoint;
-        Time.timeScale = 1;
     }
 
     // Update is called once per frame
